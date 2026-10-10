@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIDO Certificate Studio</title>
+<style>
+:root{--bg:#07111f;--panel:#101d30;--panel2:#14243b;--text:#edf4ff;--muted:#9eb0ca;--line:#2b3e59;--accent:#68e0d0;--accent2:#7da7ff;--gold:#d9b66d;--danger:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#174b85 0,transparent 34%),radial-gradient(ellipse at 95% 15%,#193f79 0,transparent 32%),linear-gradient(135deg,#050b18,#07182c 55%,#081126);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);min-height:100vh;background-attachment:fixed}
+header{padding:22px clamp(16px,4vw,48px);border-bottom:1px solid #24364e;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:rgba(8,19,36,.62);position:sticky;top:0;z-index:10;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 10px 35px #0002}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07111f;font-weight:900;font-size:20px;box-shadow:0 0 25px #68e0d033}.brand h1{margin:0;font-size:19px;letter-spacing:.7px}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}.header-tag{font-size:11px;letter-spacing:1px;color:var(--accent);border:1px solid #376a70;padding:8px 11px;border-radius:30px}
+main{max-width:1500px;margin:auto;padding:26px clamp(14px,3vw,36px) 50px}.intro{margin:0 0 22px}.intro h2{font-size:clamp(24px,3vw,34px);margin:0 0 8px}.intro p{color:var(--muted);margin:0;line-height:1.6;max-width:850px}
+.layout{display:grid;grid-template-columns:minmax(300px,390px) minmax(0,1fr);gap:22px;align-items:start}.panel{background:linear-gradient(145deg,rgba(28,59,98,.58),rgba(8,22,42,.72));border:1px solid rgba(151,198,255,.22);border-radius:18px;overflow:hidden;box-shadow:0 18px 45px #0003,inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}.panel-head{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-head h3{font-size:15px;margin:0}.panel-body{padding:20px}.field{margin-bottom:14px}.field label{display:block;font-size:12px;color:#c1cee0;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;padding:11px 12px;border-radius:9px;border:1px solid #344963;background:rgba(4,15,31,.7);color:var(--text);font:inherit;font-size:13px;outline:none;backdrop-filter:blur(8px)}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #68e0d018}.field textarea{resize:vertical;min-height:74px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.divider{height:1px;background:var(--line);margin:18px 0}.section-label{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin:0 0 14px}.btn-row{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid #39506d;background:#172941;color:var(--text);padding:10px 13px;border-radius:9px;font-weight:650;font-size:12px;cursor:pointer;transition:.18s}.btn:hover{transform:translateY(-1px);border-color:var(--accent)}.btn.primary{background:linear-gradient(135deg,var(--accent),#a0f3d8);color:#071820;border:0}.btn.blue{background:linear-gradient(135deg,#709cff,#9bb9ff);color:#081427;border:0}.btn.gold{background:linear-gradient(135deg,#d8b36a,#f2d99a);color:#241b08;border:0}.btn.danger{color:#ffb4b4;border-color:#6e3b48}.small-note{font-size:11px;color:var(--muted);line-height:1.6}.status{padding:11px 12px;border-radius:9px;background:#102b2d;border:1px solid #285456;color:#b7f5e7;font-size:12px;line-height:1.5;margin-top:13px;display:none}.preview-panel{min-width:0}.preview-toolbar{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}.preview-toolbar span{font-size:12px;color:var(--muted)}.preview-wrap{padding:clamp(10px,2vw,26px);background:repeating-linear-gradient(135deg,#0a1626,#0a1626 10px,#0c1a2b 10px,#0c1a2b 20px);overflow:auto}
+.certificate{position:relative;width:100%;min-width:620px;aspect-ratio:1.414/1;background:#fffdf5;color:#202c42;overflow:hidden;padding:4.1%;font-family:Georgia,'Times New Roman',serif;box-shadow:0 20px 50px #0005;isolation:isolate}
+.cert-border{position:absolute;inset:2.1%;border:3px double #294d7a;pointer-events:none}.cert-border:before{content:"";position:absolute;inset:7px;border:1px solid #b89a58}.cert-corner{position:absolute;width:70px;height:70px;border-color:#b89a58;z-index:1}.tl{top:2.6%;left:2.6%;border-top:4px solid;border-left:4px solid}.tr{top:2.6%;right:2.6%;border-top:4px solid;border-right:4px solid}.bl{bottom:2.6%;left:2.6%;border-bottom:4px solid;border-left:4px solid}.br{bottom:2.6%;right:2.6%;border-bottom:4px solid;border-right:4px solid}
+.cert-content{position:relative;height:100%;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:2.3% 5% 1%;}.cert-school{font:700 clamp(13px,1.5vw,22px) Arial,sans-serif;letter-spacing:1.7px;text-transform:uppercase;color:#1b3e68;max-width:90%;overflow-wrap:anywhere}.cert-subtitle{font:italic 12px Georgia;color:#68788e;margin-top:4px}.ornament{color:#b89a58;font-size:19px;line-height:1.2;margin:7px 0}.cert-title{font-size:clamp(28px,4vw,54px);color:#1d3f6a;margin:2px 0 4px;font-weight:700;letter-spacing:1px}.cert-label{font:700 10px Arial,sans-serif;letter-spacing:4px;color:#a37f38;text-transform:uppercase}.cert-intro{font-size:clamp(11px,1.15vw,15px);font-style:italic;margin:13px 0 5px;color:#526176}.cert-name{font-size:clamp(23px,3vw,39px);color:#172d4b;border-bottom:1px solid #bda76e;padding:0 20px 6px;max-width:92%;overflow-wrap:anywhere}.cert-description{font-size:clamp(10px,1.1vw,14px);line-height:1.55;max-width:85%;margin:10px auto 0;color:#46556a;white-space:pre-line}.cert-award{font-size:clamp(12px,1.4vw,18px);font-weight:bold;color:#294d7a;margin-top:8px}.cert-footer{display:grid;grid-template-columns:1fr 100px 1fr;align-items:end;gap:12px;width:100%;margin-top:auto;padding:12px 0 1%}.sign-block{border-top:1px solid #9ba5b3;padding-top:6px;font:11px Arial,sans-serif;color:#384c67;min-width:0}.sign-block strong{display:block;font-size:12px;color:#203957;margin-bottom:3px;overflow-wrap:anywhere}.sign-block small{font-size:9px;display:block;line-height:1.3}.qr-box{display:flex;flex-direction:column;align-items:center;justify-content:end;gap:4px;font:8px Arial,sans-serif;color:#53647a}.qr-box img,.qr-box canvas{width:72px!important;height:72px!important;background:#fff;padding:3px;border:1px solid #c6cbd1}.cert-id{font:9px Arial,sans-serif;color:#64748b;margin-top:5px}.verify-area{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:18px}.verify-card{background:rgba(16,38,66,.58);border:1px solid rgba(151,198,255,.22);border-radius:14px;padding:18px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.verify-card h3{margin:0 0 8px;font-size:14px}.verify-result{margin-top:12px;padding:12px;border-radius:9px;font-size:12px;line-height:1.6;display:none;overflow-wrap:anywhere}.verify-result.good{display:block;background:#102d27;border:1px solid #2c6555;color:#b8f3d9}.verify-result.bad{display:block;background:#321a23;border:1px solid #75404b;color:#ffc4cb}.verify-result.neutral{display:block;background:#14263b;border:1px solid #38506e;color:#d1e4ff}
+footer{color:#71839c;font-size:11px;text-align:center;margin-top:26px;line-height:1.7}.notice{color:#e6d2a2}
+
+.template-gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:-3px 0 16px}.template-chip{display:flex;align-items:center;gap:6px;justify-content:flex-start;border:1px solid rgba(150,190,235,.22);background:rgba(9,24,44,.58);color:#d9e8ff;padding:7px 6px;border-radius:9px;font-size:10px;cursor:pointer;min-width:0}.template-chip:hover,.template-chip.active{border-color:#68e0d0;background:rgba(57,121,169,.25);box-shadow:0 0 0 1px #68e0d01a}.swatch{display:inline-block;flex:0 0 13px;width:13px;height:13px;border-radius:4px;border:1px solid #ffffff70}.swatch-classic{background:linear-gradient(135deg,#1d4779 50%,#c4a35d 50%)}.swatch-royal{background:linear-gradient(135deg,#082d66 50%,#d8b55e 50%)}.swatch-ocean{background:linear-gradient(135deg,#087e8b 50%,#d4b66b 50%)}.swatch-midnight{background:linear-gradient(135deg,#111c38 50%,#759aff 50%)}.swatch-emerald{background:linear-gradient(135deg,#165747 50%,#c4a45c 50%)}.swatch-burgundy{background:linear-gradient(135deg,#762c42 50%,#d7b57a 50%)}.swatch-minimal{background:linear-gradient(135deg,#f7f8fb 50%,#4e6685 50%)}.swatch-violet{background:linear-gradient(135deg,#4d3885 50%,#c5a5ff 50%)}
+.certificate[data-theme="royal"]{background:#fffdf3}.certificate[data-theme="royal"] .cert-border{border-color:#082d66}.certificate[data-theme="royal"] .cert-border:before{border-color:#d8b55e}.certificate[data-theme="royal"] .cert-title,.certificate[data-theme="royal"] .cert-school,.certificate[data-theme="royal"] .cert-award{color:#082d66}.certificate[data-theme="royal"] .cert-corner{color:#d8b55e}
+.certificate[data-theme="ocean"]{background:#f4fffe}.certificate[data-theme="ocean"] .cert-border{border-color:#087e8b}.certificate[data-theme="ocean"] .cert-border:before{border-color:#d4b66b}.certificate[data-theme="ocean"] .cert-title,.certificate[data-theme="ocean"] .cert-school,.certificate[data-theme="ocean"] .cert-award{color:#087e8b}.certificate[data-theme="ocean"] .cert-corner{color:#d4b66b}
+.certificate[data-theme="midnight"]{background:#f5f7ff}.certificate[data-theme="midnight"] .cert-border{border-color:#17264b}.certificate[data-theme="midnight"] .cert-border:before{border-color:#759aff}.certificate[data-theme="midnight"] .cert-title,.certificate[data-theme="midnight"] .cert-school,.certificate[data-theme="midnight"] .cert-award{color:#17264b}.certificate[data-theme="midnight"] .cert-corner{color:#759aff}
+.certificate[data-theme="emerald"]{background:#fbfff9}.certificate[data-theme="emerald"] .cert-border{border-color:#165747}.certificate[data-theme="emerald"] .cert-border:before{border-color:#c4a45c}.certificate[data-theme="emerald"] .cert-title,.certificate[data-theme="emerald"] .cert-school,.certificate[data-theme="emerald"] .cert-award{color:#165747}.certificate[data-theme="emerald"] .cert-corner{color:#c4a45c}
+.certificate[data-theme="burgundy"]{background:#fffaf8}.certificate[data-theme="burgundy"] .cert-border{border-color:#762c42}.certificate[data-theme="burgundy"] .cert-border:before{border-color:#d7b57a}.certificate[data-theme="burgundy"] .cert-title,.certificate[data-theme="burgundy"] .cert-school,.certificate[data-theme="burgundy"] .cert-award{color:#762c42}.certificate[data-theme="burgundy"] .cert-corner{color:#d7b57a}
+.certificate[data-theme="minimal"]{background:#ffffff}.certificate[data-theme="minimal"] .cert-border{border:2px solid #4e6685}.certificate[data-theme="minimal"] .cert-border:before{border:0}.certificate[data-theme="minimal"] .cert-title,.certificate[data-theme="minimal"] .cert-school,.certificate[data-theme="minimal"] .cert-award{color:#314d72}.certificate[data-theme="minimal"] .cert-corner{display:none}
+.certificate[data-theme="violet"]{background:#fcfaff}.certificate[data-theme="violet"] .cert-border{border-color:#4d3885}.certificate[data-theme="violet"] .cert-border:before{border-color:#c5a5ff}.certificate[data-theme="violet"] .cert-title,.certificate[data-theme="violet"] .cert-school,.certificate[data-theme="violet"] .cert-award{color:#4d3885}.certificate[data-theme="violet"] .cert-corner{color:#c5a5ff}
+@media(max-width:600px){.template-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.preview-wrap{padding:12px}.certificate{min-width:620px}.verify-area{grid-template-columns:1fr}}
+@media(max-width:600px){header{position:static}.two{grid-template-columns:1fr}.panel-body{padding:15px}.preview-toolbar{align-items:flex-start}.cert-footer{grid-template-columns:1fr 76px 1fr;gap:5px}.sign-block{font-size:9px}.sign-block strong{font-size:10px}.qr-box img,.qr-box canvas{width:58px!important;height:58px!important}.certificate{min-width:590px}}
+@media print{body{background:white;color:black}header,.intro,.editor-panel,.preview-toolbar,.verify-area,footer{display:none!important}main{padding:0;max-width:none}.layout{display:block}.preview-panel,.panel{border:0;box-shadow:none;background:white}.preview-wrap{padding:0;background:white;overflow:visible}.certificate{min-width:0;width:100vw;height:70.72vw;box-shadow:none;print-color-adjust:exact;-webkit-print-color-adjust:exact}.panel-head{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">P</div><div><h1>PRIDO <span style="color:var(--accent)">CERTIFICATE STUDIO</span></h1><p>Certificate Designer · QR Verification Demo</p></div></div>
+  <div class="header-tag">SINGLE-FILE WEB APP</div>
+</header>
+<main>
+  <div class="intro"><h2>Create. Preview. Verify.</h2><p>Design a professional certificate, save it in this browser, and add a QR code for checking its saved record. This standalone demo uses browser storage; it is not an official credential issuer or a public verification database.</p></div>
+  <div class="layout">
+    <section class="panel editor-panel">
+      <div class="panel-head"><h3>Certificate Editor</h3><span style="font-size:11px;color:var(--accent)">LIVE PREVIEW</span></div>
+      <div class="panel-body">
+        <p class="section-label">Institution details</p>
+        <div class="field"><label for="school">School / Organization</label><input id="school" value="MOUNT SINAI MISSION SCHOOL"></div>
+        <div class="field"><label for="subtitle">Location / Subtitle</label><input id="subtitle" value="Kasba, Purnea · Certificate of Achievement"></div>
+        <div class="field"><label for="certTitle">Certificate title</label><select id="certTitle"><option>Certificate of Merit</option><option>Certificate of Achievement</option><option>Certificate of Participation</option><option>Certificate of Excellence</option><option>Certificate of Appreciation</option></select></div>
+        <div class="field"><label for="templateSelect">Certificate Design Template</label><select id="templateSelect"><option value="classic">Classic Blue & Gold</option><option value="royal">Royal Blue Prestige</option><option value="ocean">Ocean Teal</option><option value="midnight">Midnight Sapphire</option><option value="emerald">Emerald Honors</option><option value="burgundy">Burgundy Elegance</option><option value="minimal">Minimal Modern</option><option value="violet">Violet Excellence</option></select></div>
+        <div class="template-gallery" aria-label="Quick template choices">
+          <button type="button" class="template-chip active" data-template="classic"><span class="swatch swatch-classic"></span>Classic</button>
+          <button type="button" class="template-chip" data-template="royal"><span class="swatch swatch-royal"></span>Royal</button>
+          <button type="button" class="template-chip" data-template="ocean"><span class="swatch swatch-ocean"></span>Ocean</button>
+          <button type="button" class="template-chip" data-template="midnight"><span class="swatch swatch-midnight"></span>Midnight</button>
+          <button type="button" class="template-chip" data-template="emerald"><span class="swatch swatch-emerald"></span>Emerald</button>
+          <button type="button" class="template-chip" data-template="burgundy"><span class="swatch swatch-burgundy"></span>Burgundy</button>
+          <button type="button" class="template-chip" data-template="minimal"><span class="swatch swatch-minimal"></span>Minimal</button>
+          <button type="button" class="template-chip" data-template="violet"><span class="swatch swatch-violet"></span>Violet</button>
+        </div>
+        <div class="field"><label for="recipient">Recipient full name</label><input id="recipient" value="Pritam Kumar Mandal"></div>
+        <div class="field"><label for="description">Achievement / Description</label><textarea id="description">This certificate is proudly presented in recognition of outstanding effort, creativity, and dedication.</textarea></div>
+        <div class="field"><label for="award">Award / Competition</label><input id="award" value="Certificate of Merit"></div>
+        <div class="two">
+          <div class="field"><label for="className">Class / Category</label><input id="className" value="Class 8"></div>
+          <div class="field"><label for="date">Issue date</label><input id="date" type="date" value="2026-10-10"></div>
+        </div>
+        <div class="divider"></div>
+        <p class="section-label">Signatures & identity</p>
+        <div class="two">
+          <div class="field"><label for="sign1">Authorized signatory</label><input id="sign1" value="Authorized Signatory"></div>
+          <div class="field"><label for="role1">Designation</label><input id="role1" value="Principal / Director"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="sign2">Second signatory</label><input id="sign2" value="Certificate Coordinator"></div>
+          <div class="field"><label for="role2">Designation</label><input id="role2" value="Program Coordinator"></div>
+        </div>
+        <div class="field"><label for="certId">Certificate ID</label><input id="certId" value="PRIDO-2026-0001"></div>
+        <div class="btn-row"><button class="btn primary" id="saveBtn">Save record & refresh QR</button><button class="btn" id="newIdBtn">Generate new ID</button></div>
+        <div id="saveStatus" class="status"></div>
+        <div class="divider"></div>
+        <p class="section-label">Export certificate</p>
+        <div class="btn-row">
+          <button class="btn blue" id="pngBtn">Download PNG</button>
+          <button class="btn" id="jpgBtn">Download JPG</button>
+          <button class="btn gold" id="printBtn">Print / Save PDF</button>
+        </div>
+        <p class="small-note">PNG/JPG exports include the certificate artwork and QR code. For best results, save the record first. Printing can be used to select “Save as PDF”.</p>
+      </div>
+    </section>
+    <section class="panel preview-panel">
+      <div class="preview-toolbar"><strong style="font-size:14px">Certificate Preview</strong><span>Landscape · A4-style layout</span></div>
+      <div class="preview-wrap">
+        <div class="certificate" id="certificate">
+          <div class="cert-border"></div><div class="cert-corner tl"></div><div class="cert-corner tr"></div><div class="cert-corner bl"></div><div class="cert-corner br"></div>
+          <div class="cert-content">
+            <div class="cert-school" id="pSchool">MOUNT SINAI MISSION SCHOOL</div>
+            <div class="cert-subtitle" id="pSubtitle">Kasba, Purnea · Certificate of Achievement</div>
+            <div class="ornament">✦ ❦ ✦</div>
+            <div class="cert-label">This certificate is awarded to</div>
+            <div class="cert-title" id="pTitle">Certificate of Merit</div>
+            <div class="cert-intro">Proudly presented to</div>
+            <div class="cert-name" id="pRecipient">Pritam Kumar Mandal</div>
+            <div class="cert-description" id="pDescription">This certificate is proudly presented in recognition of outstanding effort, creativity, and dedication.</div>
+            <div class="cert-award" id="pAward">Certificate of Merit</div>
+            <div class="cert-id" id="pId">Certificate ID: PRIDO-2026-0001 · Class 8 · Issued 10 October 2026</div>
+            <div class="cert-footer">
+              <div class="sign-block"><strong id="pSign1">Authorized Signatory</strong><small id="pRole1">Principal / Director</small></div>
+              <div class="qr-box"><div id="qrCode"></div><span>SCAN TO CHECK RECORD</span></div>
+              <div class="sign-block"><strong id="pSign2">Certificate Coordinator</strong><small id="pRole2">Program Coordinator</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body"><p class="small-note notice">Important: Only an authorized organization can issue an official certificate. Do not add fake signatures, seals, or claims of government/school approval. This tool creates designs and local demo records only.</p></div>
+    </section>
+  </div>
+  <section class="verify-area">
+    <div class="verify-card">
+      <h3>🔎 Verify a saved certificate</h3><p class="small-note">Enter the certificate ID to check whether a matching record exists in this browser’s local storage.</p>
+      <div class="field"><label for="verifyId">Certificate ID</label><input id="verifyId" placeholder="e.g. PRIDO-2026-0001"></div>
+      <button class="btn primary" id="verifyBtn">Check record</button>
+      <div id="verifyResult" class="verify-result"></div>
+    </div>
+    <div class="verify-card">
+      <h3>📚 Saved records in this browser</h3><p class="small-note">Records are saved only on this device/browser. They do not sync to other devices and can be cleared if browser data is deleted.</p>
+      <div id="recordsList" class="small-note">No saved records yet.</div>
+      <div class="btn-row" style="margin-top:12px"><button class="btn" id="refreshRecords">Refresh list</button><button class="btn danger" id="clearRecords">Clear local records</button></div>
+    </div>
+  </section>
+  <footer>PRIDO Certificate Studio · Demo project · HTML + CSS + JavaScript in one file<br><span class="notice">QR scan and browser-local lookup are not the same as cryptographic or public verification.</span></footer>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const inputIds = ['school','subtitle','certTitle','recipient','description','award','className','date','sign1','role1','sign2','role2','certId'];
+const storageKey = 'prido_certificate_records_v1';
+const themes = ['classic','royal','ocean','midnight','emerald','burgundy','minimal','violet'];
+let qr = null;
+function esc(s){return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function getData(){
+  return {
+    school:$('school').value.trim(), subtitle:$('subtitle').value.trim(), title:$('certTitle').value,
+    recipient:$('recipient').value.trim(), description:$('description').value.trim(), award:$('award').value.trim(),
+    className:$('className').value.trim(), date:$('date').value, sign1:$('sign1').value.trim(), role1:$('role1').value.trim(),
+    sign2:$('sign2').value.trim(), role2:$('role2').value.trim(), id:$('certId').value.trim(), theme:$('templateSelect').value
+  };
+}
+function dateText(value){
+  if(!value) return 'Not specified';
+  const d = new Date(value+'T12:00:00');
+  return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
+}
+function render(){
+  const d=getData();
+  $('certificate').dataset.theme=themes.includes(d.theme)?d.theme:'classic';
+  document.querySelectorAll('[data-template]').forEach(btn=>btn.classList.toggle('active',btn.dataset.template===$('templateSelect').value));
+  $('pSchool').textContent=d.school || 'YOUR ORGANIZATION';
+  $('pSubtitle').textContent=d.subtitle;
+  $('pTitle').textContent=d.title;
+  $('pRecipient').textContent=d.recipient || 'Recipient Name';
+  $('pDescription').textContent=d.description;
+  $('pAward').textContent=d.award;
+  $('pId').textContent=`Certificate ID: ${d.id || 'NOT SET'} · ${d.className || 'Category not specified'} · Issued ${dateText(d.date)}`;
+  $('pSign1').textContent=d.sign1 || 'Authorized Signatory';
+  $('pRole1').textContent=d.role1;
+  $('pSign2').textContent=d.sign2 || 'Certificate Coordinator';
+  $('pRole2').textContent=d.role2;
+  renderQR(d);
+}
+function qrPayload(d){
+  return JSON.stringify({app:'PRIDO Certificate Studio demo',id:d.id,recipient:d.recipient,organization:d.school,title:d.title,award:d.award,issueDate:d.date,verification:'Local demo record only; verify directly with the issuing organization.'});
+}
+function renderQR(d){
+  const target=$('qrCode'); target.innerHTML='';
+  if(typeof QRCode==='undefined'){
+    target.innerHTML='<span style="font:9px Arial;color:#9b2b2b">QR library<br>requires internet</span>'; return;
+  }
+  qr = new QRCode(target,{text:qrPayload(d),width:72,height:72,colorDark:'#14233b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+}
+function readRecords(){
+  try{return JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(e){return {}}
+}
+function writeRecords(records){localStorage.setItem(storageKey,JSON.stringify(records))}
+function showStatus(msg){const el=$('saveStatus');el.textContent=msg;el.style.display='block';}
+function saveRecord(){
+  const d=getData();
+  if(!d.id){showStatus('Please enter a certificate ID first.');return;}
+  if(!d.recipient){showStatus('Please enter the recipient name first.');return;}
+  const records=readRecords();
+  records[d.id]={...d,savedAt:new Date().toISOString(),recordType:'PRIDO local demo record'};
+  writeRecords(records);
+  $('verifyId').value=d.id;
+  showStatus('Saved in this browser. QR refreshed with certificate details. This does not prove official authenticity.');
+  render();renderRecords();
+}
+function verifyRecord(){
+  const id=$('verifyId').value.trim();
+  const result=$('verifyResult');
+  result.className='verify-result';
+  if(!id){result.classList.add('bad');result.textContent='Enter a certificate ID.';return;}
+  const record=readRecords()[id];
+  if(record){
+    result.classList.add('good');
+    result.innerHTML='<strong>Record found in this browser</strong><br>Recipient: '+esc(record.recipient)+'<br>Organization: '+esc(record.school)+'<br>Certificate: '+esc(record.title)+'<br>Award: '+esc(record.award)+'<br>Issue date: '+esc(dateText(record.date))+'<br><br><strong>Note:</strong> This confirms only that a matching local demo record exists. Confirm official validity with the named issuer.';
+  }else{
+    result.classList.add('bad');
+    result.innerHTML='<strong>No matching local record found.</strong><br>This browser has no saved record with ID <b>'+esc(id)+'</b>. It does not establish whether a certificate is genuine or fake; records may exist in another browser or an issuer’s system.';
+  }
+}
+function renderRecords(){
+  const records=readRecords(), ids=Object.keys(records);
+  const el=$('recordsList');
+  if(!ids.length){el.textContent='No saved records yet.';return;}
+  el.innerHTML=ids.slice(-8).reverse().map(id=>'<div style="padding:9px 0;border-bottom:1px solid #263a53"><strong style="color:#d8e8ff">'+esc(id)+'</strong><br>'+esc(records[id].recipient)+' · '+esc(dateText(records[id].date))+' <button class="btn" style="padding:5px 8px;margin-top:5px" data-load="'+esc(id)+'">Load</button></div>').join('');
+  el.querySelectorAll('[data-load]').forEach(btn=>btn.addEventListener('click',()=>loadRecord(btn.getAttribute('data-load'))));
+}
+function loadRecord(id){
+  const d=readRecords()[id];if(!d)return;
+  $('school').value=d.school||'';$('subtitle').value=d.subtitle||'';$('certTitle').value=d.title||'Certificate of Merit';$('templateSelect').value=themes.includes(d.theme)?d.theme:'classic';
+  $('recipient').value=d.recipient||'';$('description').value=d.description||'';$('award').value=d.award||'';
+  $('className').value=d.className||'';$('date').value=d.date||'';$('sign1').value=d.sign1||'';$('role1').value=d.role1||'';
+  $('sign2').value=d.sign2||'';$('role2').value=d.role2||'';$('certId').value=d.id||id;
+  render();showStatus('Loaded saved record '+id+'.');
+}
+function newId(){
+  const y=new Date().getFullYear();
+  $('certId').value='PRIDO-'+y+'-'+Math.random().toString(36).slice(2,8).toUpperCase();
+  render();
+}
+async function exportImage(type){
+  if(typeof html2canvas==='undefined'){alert('Export library could not load. Check your internet connection, then try again.');return;}
+  render();
+  const cert=$('certificate');
+  try{
+    const canvas=await html2canvas(cert,{scale:2,backgroundColor:'#fffdf5',useCORS:true,logging:false});
+    const mime=type==='jpg'?'image/jpeg':'image/png';
+    const a=document.createElement('a');a.download=($('certId').value.trim()||'prido-certificate')+'.'+type;
+    a.href=canvas.toDataURL(mime,0.95);a.click();
+  }catch(e){alert('Could not export image. Please try printing to PDF instead.');}
+}
+inputIds.forEach(id=>$(id).addEventListener('input',render));
+$('templateSelect').addEventListener('change',render);
+document.querySelectorAll('[data-template]').forEach(btn=>btn.addEventListener('click',()=>{$('templateSelect').value=btn.dataset.template;render();}));
+$('saveBtn').addEventListener('click',saveRecord);
+$('newIdBtn').addEventListener('click',newId);
+$('verifyBtn').addEventListener('click',verifyRecord);
+$('refreshRecords').addEventListener('click',renderRecords);
+$('clearRecords').addEventListener('click',()=>{
+  if(confirm('Delete all PRIDO demo records saved in this browser?')){localStorage.removeItem(storageKey);renderRecords();$('verifyResult').className='verify-result';}
+});
+$('pngBtn').addEventListener('click',()=>exportImage('png'));
+$('jpgBtn').addEventListener('click',()=>exportImage('jpg'));
+$('printBtn').addEventListener('click',()=>window.print());
+$('verifyId').addEventListener('keydown',e=>{if(e.key==='Enter')verifyRecord();});
+render();renderRecords();
+</script>
+</body>
+</html>
